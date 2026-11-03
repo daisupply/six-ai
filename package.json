@@ -1,0 +1,1 @@
+{"description":"six — the standalone Six AI app. A sharp, funny, extremely capable AI with real personality.","engines":{"node":">=18"},"license":"UNLICENSED","main":"server.js","name":"six-ai","private":true,"scripts":{"start":"node server.js"},"version":"1.0.0"}

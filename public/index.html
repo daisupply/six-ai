@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>six — your ai, but actually yours</title>
+<meta name="description" content="six is a sharp, funny, extremely capable ai. chat, ideas, code, homework, drawings — no corporate stiffness.">
+<meta name="theme-color" content="#08080a">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="app">
+  <div id="scrim" hidden></div>
+
+  <aside id="sidebar" aria-label="conversations">
+    <div class="side-top">
+      <a class="brand" href="/">
+        <svg class="star" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 2 L61.8 38.2 L98 50 L61.8 61.8 L50 98 L38.2 61.8 L2 50 L38.2 38.2 Z"/></svg>
+        <span class="wordmark">six</span>
+      </a>
+      <button id="newChatBtn" class="newchat" type="button">
+        <svg viewBox="0 0 24 24" class="ic"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        new chat
+      </button>
+    </div>
+    <div class="side-search">
+      <svg viewBox="0 0 24 24" class="ic dim"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input id="chatSearch" type="text" placeholder="search chats" autocomplete="off">
+    </div>
+    <nav id="chatList" class="chatlist" aria-label="chat history"></nav>
+    <div class="side-foot">
+      <button id="settingsBtn" class="footbtn" type="button">
+        <svg viewBox="0 0 24 24" class="ic"><circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19 12a7 7 0 0 0-.14-1.4l2.1-1.63-2-3.46-2.48 1a7 7 0 0 0-2.42-1.4L13.66 2.6h-3.32l-.4 2.51a7 7 0 0 0-2.42 1.4l-2.48-1-2 3.46 2.1 1.63a7 7 0 0 0 0 2.8l-2.1 1.63 2 3.46 2.48-1a7 7 0 0 0 2.42 1.4l.4 2.51h3.32l.4-2.51a7 7 0 0 0 2.42-1.4l2.48 1 2-3.46-2.1-1.63c.1-.45.14-.92.14-1.4Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        settings
+      </button>
+      <div class="foot-note">chats live on this device only</div>
+    </div>
+  </aside>
+
+  <main id="main">
+    <header id="topbar">
+      <button id="menuBtn" class="iconbtn only-mobile" type="button" aria-label="open menu">
+        <svg viewBox="0 0 24 24" class="ic"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="top-title">
+        <svg class="star sm" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 2 L61.8 38.2 L98 50 L61.8 61.8 L50 98 L38.2 61.8 L2 50 L38.2 38.2 Z"/></svg>
+        <span>six</span>
+        <span id="statusDot" class="dot" title="checking status"></span>
+        <span id="statusText" class="status-text">connecting…</span>
+      </div>
+      <button id="topNewBtn" class="iconbtn" type="button" aria-label="new chat">
+        <svg viewBox="0 0 24 24" class="ic"><path d="M12 20h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      </button>
+    </header>
+
+    <section id="scroll" aria-live="polite">
+      <div id="empty" class="empty">
+        <svg class="star hero" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 2 L61.8 38.2 L98 50 L61.8 61.8 L50 98 L38.2 61.8 L2 50 L38.2 38.2 Z"/></svg>
+        <h1>yo, i'm <span class="grad">six</span></h1>
+        <p class="tag">ask me anything — homework, code, ideas, roasts, late-night thoughts.<br class="only-desktop"> i actually answer like a person.</p>
+        <div id="chips" class="chips"></div>
+      </div>
+      <div id="msgs" class="msgs"></div>
+      <div id="scrollPad"></div>
+    </section>
+
+    <footer id="composerWrap">
+      <div id="drawBar" class="drawbar" hidden>
+        <svg viewBox="0 0 24 24" class="ic"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="10" r="1.6" fill="currentColor"/><path d="M21 16l-5-5-9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        <span>draw mode — describe a picture</span>
+        <button id="drawOff" type="button" aria-label="exit draw mode">✕</button>
+      </div>
+      <form id="composer" autocomplete="off">
+        <button id="drawBtn" class="cbtn" type="button" aria-label="draw an image" title="draw an image">
+          <svg viewBox="0 0 24 24" class="ic"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="10" r="1.6" fill="currentColor"/><path d="M21 16l-5-5-9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </button>
+        <textarea id="input" rows="1" placeholder="message six…" maxlength="8000"></textarea>
+        <button id="sendBtn" class="send" type="submit" aria-label="send">
+          <svg viewBox="0 0 24 24" class="ic" id="sendIcon"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg viewBox="0 0 24 24" class="ic" id="stopIcon" hidden><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg>
+        </button>
+      </form>
+      <div class="fineprint">six can be wrong — double-check the important stuff. enter to send · shift+enter for a new line</div>
+    </footer>
+  </main>
+</div>
+
+<div id="settingsModal" class="modal" hidden>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h2>settings</h2>
+      <button id="settingsClose" class="iconbtn" type="button" aria-label="close">✕</button>
+    </div>
+    <div class="set-row">
+      <div>
+        <div class="set-title">server</div>
+        <div class="set-sub" id="serverInfo">checking…</div>
+      </div>
+    </div>
+    <div class="set-row">
+      <div>
+        <div class="set-title">clear all chats</div>
+        <div class="set-sub">wipes every conversation stored on this device</div>
+      </div>
+      <button id="clearBtn" class="danger" type="button">clear</button>
+    </div>
+    <div class="set-row">
+      <div>
+        <div class="set-title">about six</div>
+        <div class="set-sub">six is the ai from 6ixnetworks, set free as his own app. built to be sharp, fast, n actually fun to talk to.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" hidden></div>
+
+<script src="/app.js"></script>
+</body>
+</html>
