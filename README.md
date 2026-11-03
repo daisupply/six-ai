@@ -36,18 +36,31 @@ GEMINI_API_KEY=your_key node server.js
 | `CF_API_TOKEN`   | no       | Enables drawing (token with Workers AI access) |
 | `PORT`           | no       | Set automatically on Render (default 3000)     |
 
-## Deploy (Render)
+## Deploy (Cloudflare Workers — the main way)
 
-1. New → Web Service → pick this repo (`render.yaml` is included, so the
-   service configures itself).
-2. Add the `GEMINI_API_KEY` environment variable (and the two `CF_*` vars if
-   you want drawing).
-3. Deploy. That's it.
+1. Cloudflare dashboard → **Workers & Pages → Create → Import a repository** →
+   pick this repo. The included `wrangler.toml` configures everything
+   (worker entry `worker.js`, static files from `public/`).
+2. After the first deploy, open the worker → **Settings → Variables and
+   Secrets** and add:
+   - `GEMINI_API_KEY` as a **Secret** (required — Six's brain)
+   - `CF_ACCOUNT_ID` + `CF_API_TOKEN` (optional — lights up drawing)
+3. Redeploy once so the secret binds. Done — he lives at
+   `https://six-ai.<your-subdomain>.workers.dev` (or a custom domain).
+
+CLI instead? `npx wrangler deploy` then `npx wrangler secret put GEMINI_API_KEY`.
+
+### Or on Node (Render etc.)
+
+`server.js` is the same app as a zero-dependency Node server — `render.yaml`
+is included for a one-click Render service; set the same env vars there.
 
 ## Layout
 
 ```
-server.js            everything server-side (static host + /api/chat + /api/image)
+worker.js            the Cloudflare Worker (api + assets host)
+server.js            the same app on plain Node (alternative host)
+wrangler.toml        Cloudflare config
 public/
   index.html         the app shell
   style.css          the design system

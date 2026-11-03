@@ -1,0 +1,13 @@
+name = "six-ai"
+main = "worker.js"
+compatibility_date = "2025-09-01"
+
+[assets]
+directory = "./public"
+not_found_handling = "single-page-application"
+
+# Secrets/vars are set in the Cloudflare dashboard, NOT in this file:
+#   Worker -> Settings -> Variables and Secrets
+#   GEMINI_API_KEY  (Secret, required)
+#   CF_ACCOUNT_ID   (optional, drawing)
+#   CF_API_TOKEN    (optional, drawing)
